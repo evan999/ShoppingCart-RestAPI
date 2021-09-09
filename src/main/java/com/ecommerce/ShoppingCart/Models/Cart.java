@@ -3,8 +3,8 @@ package com.ecommerce.ShoppingCart.Models;
 import javax.persistence.*;
 import java.util.Date;
 
-//@Entity
-//@Table(name = "Cart")
+@Entity
+@Table(name = "Cart")
 public class Cart {
 
 //    @Id
