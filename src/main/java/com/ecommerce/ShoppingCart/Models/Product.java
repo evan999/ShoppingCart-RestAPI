@@ -1,5 +1,7 @@
 package com.ecommerce.ShoppingCart.Models;
 
+import com.ecommerce.ShoppingCart.Dto.ProductDto;
+
 import java.util.List;
 
 public class Product {
@@ -12,6 +14,17 @@ public class Product {
 
     Category category;
     // private List<Cart> carts;
+    public Product(){
+
+    }
+
+//    public Product(ProductDto productDto, Category category) {
+//        this.name = productDto.getName();
+//        this.imageURL = productDto.getImageURL();
+//        this.description = productDto.getDescription();
+//        this.price = productDto.getPrice();
+//        this.category = category;
+//    }
 
     public Product(String name, double price, String description, String imageURL, Category category) {
         this.name = name;
@@ -21,8 +34,10 @@ public class Product {
         this.category = category;
     }
 
-    public Product(){
 
+
+    public Integer getId() {
+        return id;
     }
 
     public void setId(Integer id) {

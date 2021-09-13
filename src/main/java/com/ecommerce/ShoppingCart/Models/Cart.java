@@ -1,5 +1,7 @@
 package com.ecommerce.ShoppingCart.Models;
 
+import com.ecommerce.ShoppingCart.Dto.CartDto;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -7,45 +9,78 @@ import java.util.Date;
 @Table(name = "Cart")
 public class Cart {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-//    @Column(name = "product_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+    @Column(name = "product_id")
     private Long productId;
+
+    private Integer userId;
     private int quantity;
-//    @Column(name = "created_date")
+    @Column(name = "created_date")
     private Date createdDate;
 
-    private User user;
+//    private User user;
 
 //    @ManyToOne
 //    @JoinColumn(name = "product_id")
     private Product product;
 
+
     public Cart() {
     }
 
-    public Cart(Product product, int quantity, User user) {
-        this.user = user;
+    public Cart(CartDto cartDto, Product product, int userId) {
+        this.userId = userId;
+        this.productId = cartDto.getProductId();
+        this.createdDate = new Date();
         this.product = product;
         this.quantity = quantity;
+    }
+
+    public Cart(Integer userId, Long productId, int quantity) {
+        this.userId = userId;
+        this.productId = productId;
+        this.createdDate = new Date();
+        this.quantity = quantity;
+    }
+
+    public Cart(CartDto cartDto, Product product) {
+        this.productId = cartDto.getProductId();
+        this.quantity = cartDto.getQuantity();
+        this.product = product;
         this.createdDate = new Date();
     }
 
-    public Long getId() {
+//    public Cart(Product product, int quantity, Integer userId) {
+//        this.userId = userId;
+//        this.product = product;
+//        this.quantity = quantity;
+//        this.createdDate = new Date();
+//    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public Date getCreatedDate() {
