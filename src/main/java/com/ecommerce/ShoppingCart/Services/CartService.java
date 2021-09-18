@@ -1,6 +1,6 @@
 package com.ecommerce.ShoppingCart.Services;
 
-import com.ecommerce.ShoppingCart.CartItemNotExistException;
+import com.ecommerce.ShoppingCart.Exceptions.CartItemNotExistException;
 import com.ecommerce.ShoppingCart.Dto.AddToCartDto;
 import com.ecommerce.ShoppingCart.Dto.CartDto;
 import com.ecommerce.ShoppingCart.Models.Cart;
