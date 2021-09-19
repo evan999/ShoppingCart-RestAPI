@@ -13,7 +13,7 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @Column(name = "product_id")
-    private Long productId;
+    private Integer productId;
 
     private Integer userId;
     private int quantity;
@@ -38,7 +38,7 @@ public class Cart {
         this.quantity = quantity;
     }
 
-    public Cart(Integer userId, Long productId, int quantity) {
+    public Cart(Integer userId, Integer productId, int quantity) {
         this.userId = userId;
         this.productId = productId;
         this.createdDate = new Date();
@@ -75,11 +75,11 @@ public class Cart {
         this.userId = userId;
     }
 
-    public Long getProductId() {
+    public Integer getProductId() {
         return productId;
     }
 
-    public void setProductId(Long productId) {
+    public void setProductId(Integer productId) {
         this.productId = productId;
     }
 

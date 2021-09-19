@@ -13,20 +13,21 @@ public class Product {
     private String imageURL;
 
     Category category;
-    // private List<Cart> carts;
+    private List<Cart> carts;
     public Product(){
 
     }
 
-//    public Product(ProductDto productDto, Category category) {
-//        this.name = productDto.getName();
-//        this.imageURL = productDto.getImageURL();
-//        this.description = productDto.getDescription();
-//        this.price = productDto.getPrice();
-//        this.category = category;
-//    }
+    public Product(ProductDto productDto, Category category) {
+        this.name = productDto.getName();
+        this.imageURL = productDto.getImageURL();
+        this.description = productDto.getDescription();
+        this.price = productDto.getPrice();
+        this.category = category;
+    }
 
     public Product(String name, double price, String description, String imageURL, Category category) {
+        super();
         this.name = name;
         this.price = price;
         this.description = description;
@@ -50,6 +51,14 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public double getPrice() {

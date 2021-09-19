@@ -23,7 +23,7 @@ public class CartService {
         this.cartRepository = cartRepository;
     }
 
-    public void addCart(AddToCartDto addToCartDto, int userId) {
+    public void addToCart(AddToCartDto addToCartDto, int userId) {
         Cart cart = getAddToCartFromDto(addToCartDto, userId);
         cartRepository.save(cart);
     }
@@ -58,7 +58,7 @@ public class CartService {
         cart.setQuantity(cartDto.getQuantity());
         cart.setUserId(userId);
         cart.setId(cartDto.getId());
-        //cart.setProductId(product.getId());
+        cart.setProductId(product.getId());
         cart.setCreatedDate(new Date());
         cartRepository.save(cart);
     }
