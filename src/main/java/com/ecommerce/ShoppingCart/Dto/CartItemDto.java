@@ -2,19 +2,18 @@ package com.ecommerce.ShoppingCart.Dto;
 
 import com.ecommerce.ShoppingCart.Models.Cart;
 import com.ecommerce.ShoppingCart.Models.Product;
+import com.sun.istack.NotNull;
 
-public class CartDto {
+public class CartItemDto {
     private Integer id;
-//    private Integer userId;
-    private Integer quantity;
-    private Product product;
+    private @NotNull Integer quantity;
+    private @NotNull Product product;
 
-    public CartDto() {
+    public CartItemDto() {
     }
 
-    public CartDto(Cart cart) {
+    public CartItemDto(Cart cart) {
         this.setId(cart.getId());
-        //this.setUserId(cart.getUserId());
         this.setQuantity(cart.getQuantity());
         this.setProduct(cart.getProduct());
     }
@@ -35,14 +34,6 @@ public class CartDto {
     public void setId(Integer id) {
         this.id = id;
     }
-
-//    public Integer getUserId() {
-//        return userId;
-//    }
-//
-//    public void setUserId(Integer userId) {
-//        this.userId = userId;
-//    }
 
     public Integer getQuantity() {
         return quantity;

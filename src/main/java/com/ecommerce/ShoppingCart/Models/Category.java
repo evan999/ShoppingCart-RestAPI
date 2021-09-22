@@ -1,15 +1,25 @@
 package com.ecommerce.ShoppingCart.Models;
 
+import javax.persistence.*;
 import java.util.Set;
 
+@Entity
+@Table(name = "categories")
 public class Category {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "category_name")
     private String categoryName;
 
     private String description;
 
+    private String imageURL;
+
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
     Set<Product> products;
 
     public Category() {
@@ -19,6 +29,12 @@ public class Category {
     public Category(String categoryName, String description) {
         this.categoryName = categoryName;
         this.description = description;
+    }
+
+    public Category(String categoryName, String description, String imageURL) {
+        this.categoryName = categoryName;
+        this.description = description;
+        this.imageURL = imageURL;
     }
 
     public String getCategoryName() {
@@ -48,6 +64,14 @@ public class Category {
     @Override
     public String toString() {
         return "User {category id=" + id + ", category name='" + categoryName + "', description='" + description + "'}";
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public Integer getId() {

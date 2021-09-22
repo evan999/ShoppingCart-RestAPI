@@ -5,16 +5,14 @@ import com.sun.istack.NotNull;
 
 public class AddToCartDto {
     private Integer id;
-    private @NotNull Integer userId;
     private @NotNull Integer productId;
     private @NotNull Integer quantity;
 
     public AddToCartDto(){
     }
 
-    public AddToCartDto(Integer id, @NotNull Integer userId, @NotNull Integer productId, @NotNull Integer quantity) {
+    public AddToCartDto(Integer id, @NotNull Integer productId, @NotNull Integer quantity) {
         this.id = id;
-        this.userId = userId;
         this.productId = productId;
         this.quantity = quantity;
     }
@@ -22,7 +20,7 @@ public class AddToCartDto {
     public AddToCartDto(Cart cart) {
         this.setId(cart.getId());
         this.setProductId(cart.getProductId());
-        this.setUserId(cart.getUserId());
+//        this.setUserId(cart.getUserId());
         this.setQuantity(cart.getQuantity());
     }
 
@@ -34,13 +32,6 @@ public class AddToCartDto {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
 
     public Integer getProductId() {
         return productId;

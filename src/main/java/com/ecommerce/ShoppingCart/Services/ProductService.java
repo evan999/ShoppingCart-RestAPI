@@ -1,6 +1,7 @@
 package com.ecommerce.ShoppingCart.Services;
 
 import com.ecommerce.ShoppingCart.Dto.ProductDto;
+import com.ecommerce.ShoppingCart.Exceptions.ProductNotExistException;
 import com.ecommerce.ShoppingCart.Models.Category;
 import com.ecommerce.ShoppingCart.Models.Product;
 import com.ecommerce.ShoppingCart.Repositories.ProductRepository;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ProductService {
     @Autowired
@@ -44,8 +46,11 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public Product getProductById(Integer productId) {
-
+    public Product getProductById(Integer productId) throws ProductNotExistException {
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        if (!optionalProduct.isPresent())
+            throw new ProductNotExistException("Product id is invalid " + productId);
+        return optionalProduct.get();
     }
 
 

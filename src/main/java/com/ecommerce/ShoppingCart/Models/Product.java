@@ -1,19 +1,30 @@
 package com.ecommerce.ShoppingCart.Models;
 
 import com.ecommerce.ShoppingCart.Dto.ProductDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "product")
 public class Product {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String name;
-    private double price;
-    private String description;
-    private String imageURL;
 
+    private @NotNull String name;
+    private @NotNull double price;
+    private @NotNull String description;
+    private @NotNull String imageURL;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "category_id", nullable = false)
     Category category;
-    private List<Cart> carts;
+    //private List<Cart> carts;
     public Product(){
 
     }

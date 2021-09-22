@@ -9,6 +9,7 @@ import com.ecommerce.ShoppingCart.Models.Product;
 import com.ecommerce.ShoppingCart.Repositories.CartRepository;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Cache;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,23 +24,27 @@ public class CartService {
         this.cartRepository = cartRepository;
     }
 
-    public void addToCart(AddToCartDto addToCartDto, int userId) {
-        Cart cart = getAddToCartFromDto(addToCartDto, userId);
+    public void addToCart(AddToCartDto addToCartDto) {
+        Cart cart = getAddToCartFromDto(addToCartDto);
         cartRepository.save(cart);
     }
 
-    private Cart getAddToCartFromDto(AddToCartDto addToCartDto, int userId) {
-        Cart cart = new Cart(addToCartDto, userId);
+
+
+    private Cart getAddToCartFromDto(AddToCartDto addToCartDto) {
+        Cart cart = new Cart(addToCartDto);
         return cart;
     }
 
-    public CartCost listCartItems(int userId) {
-        List<Cart> cartList = cartRepository.findAllByUserIdOrderByCreatedDateDesc(userId);
+    // Takes in param sessionId or session
+    public CartCost listCartItems(String sessionId) {
+//        Cart cart = Cache.get(session.getId(), cart.getClass());
+        //List<Cart> cartList = cartRepository.findAllByUserIdOrderByCreatedDateDesc(userId);
         List<CartDto> cartItems = new ArrayList<>();
-        for (Cart cart : cartList) {
-            CartDto cartDto = getDtoFromCart(cart);
-            cartItems.add(cartDto);
-        }
+//        for (Cart cart : cartList) {
+//            CartDto cartDto = getDtoFromCart(cart);
+//            cartItems.add(cartDto);
+//        }
         double totalCost = 0;
         for (CartDto cartDto : cartItems) {
             totalCost += (cartDto.getProduct().getPrice()* cartDto.getQuantity());
@@ -53,17 +58,17 @@ public class CartService {
         return cartDto;
     }
 
-    public void updateCartItem(AddToCartDto cartDto, int userId, Product product) {
-        Cart cart = getAddToCartFromDto(cartDto, userId);
+    public void updateCartItem(AddToCartDto cartDto, Product product) {
+        Cart cart = getAddToCartFromDto(cartDto);
         cart.setQuantity(cartDto.getQuantity());
-        cart.setUserId(userId);
+        // cart.setUserId(userId);
         cart.setId(cartDto.getId());
         cart.setProductId(product.getId());
         cart.setCreatedDate(new Date());
         cartRepository.save(cart);
     }
 
-    public void deleteCartItem(int id, int userId) throws CartItemNotExistException {
+    public void deleteCartItem(int id) throws CartItemNotExistException {
         if (!cartRepository.existsById(id)) {
             throw new CartItemNotExistException("Cart id is invalid : " + id);
         }
