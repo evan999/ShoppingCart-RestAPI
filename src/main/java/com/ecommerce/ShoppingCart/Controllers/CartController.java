@@ -3,12 +3,9 @@ package com.ecommerce.ShoppingCart.Controllers;
 import com.ecommerce.ShoppingCart.Common.ApiResponse;
 import com.ecommerce.ShoppingCart.Dto.AddToCartDto;
 import com.ecommerce.ShoppingCart.Dto.CartDto;
-import com.ecommerce.ShoppingCart.Exceptions.AuthenticationFailException;
 import com.ecommerce.ShoppingCart.Exceptions.CartItemNotExistException;
 import com.ecommerce.ShoppingCart.Exceptions.ProductNotExistException;
-import com.ecommerce.ShoppingCart.Models.Cart;
 import com.ecommerce.ShoppingCart.Models.Product;
-import com.ecommerce.ShoppingCart.Repositories.CartRepository;
 import com.ecommerce.ShoppingCart.Services.CartService;
 import com.ecommerce.ShoppingCart.Services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,25 +24,24 @@ public class CartController {
     private ProductService productService;
 
     @PostMapping("/add")
-    public ResponseEntity<ApiResponse> addToCart(@RequestBody AddToCartDto addToCartDto, @RequestParam("token") String token) throws AuthenticationFailException, ProductNotExistException {
+    public ResponseEntity<ApiResponse> addToCart(@RequestBody AddToCartDto addToCartDto) throws ProductNotExistException {
 //        authenticationService.authenticate(token);
 //        User user = authenticationService.getUser(token);
         Product product = productService.getProductById(addToCartDto.getProductId());
         System.out.println("product to add"+  product.getName());
         cartService.addToCart(addToCartDto, product);
         return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Added to cart"), HttpStatus.CREATED);
-
     }
+
     @GetMapping("/")
-    public ResponseEntity<CartDto> getCartItems(@RequestParam("token") String token) throws AuthenticationFailException {
+    public ResponseEntity<CartDto> getCartItems()  {
 //        authenticationService.authenticate(token);
 //        User user = authenticationService.getUser(token);
-        CartDto cartDto = cartService.listCartItems(user);
+        CartDto cartDto = cartService.listCartItems();
         return new ResponseEntity<CartDto>(cartDto,HttpStatus.OK);
     }
     @PutMapping("/update/{cartItemId}")
-    public ResponseEntity<ApiResponse> updateCartItem(@RequestBody @Valid AddToCartDto cartDto,
-                                                      @RequestParam("token") String token) throws AuthenticationFailException,ProductNotExistException {
+    public ResponseEntity<ApiResponse> updateCartItem(@RequestBody AddToCartDto cartDto) throws ProductNotExistException {
 //        authenticationService.authenticate(token);
 //        User user = authenticationService.getUser(token);
         Product product = productService.getProductById(cartDto.getProductId());
@@ -54,7 +50,7 @@ public class CartController {
     }
 
     @DeleteMapping("/delete/{cartItemId}")
-    public ResponseEntity<ApiResponse> deleteCartItem(@PathVariable("cartItemId") int itemID,@RequestParam("token") String token) throws AuthenticationFailException, CartItemNotExistException {
+    public ResponseEntity<ApiResponse> deleteCartItem(@PathVariable("cartItemId") int itemID,@RequestParam("token") String token) throws CartItemNotExistException {
 //        authenticationService.authenticate(token);
 //        int userId = authenticationService.getUser(token).getId();
         cartService.deleteCartItem(itemID);

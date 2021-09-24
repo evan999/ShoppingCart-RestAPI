@@ -28,6 +28,10 @@ public class ProductDto {
         this.categoryId = categoryId;
     }
 
+    public ProductDto() {
+
+    }
+
     public Integer getId() {
         return id;
     }

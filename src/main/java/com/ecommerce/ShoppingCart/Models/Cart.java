@@ -28,20 +28,27 @@ public class Cart {
     private Product product;
 
     private String sessionId;
-    private Session session = new Session();
+//    private Session session = new Session();
 
 
 
     public Cart() {
     }
 
-    public Cart(CartDto cartDto, Product product) {
-        // this.userId = userId;
-        this.productId = cartDto.getProductId();
-        this.createdDate = new Date();
+    public Cart(Product product, int quantity){
         this.product = product;
         this.quantity = quantity;
+        this.createdDate = new Date();
     }
+
+
+//    public Cart(CartDto cartDto, Product product) {
+//        // this.userId = userId;
+//        this.productId = cartDto.getProductId();
+//        this.createdDate = new Date();
+//        this.product = product;
+//        this.quantity = quantity;
+//    }
 
     public Cart(Integer productId, int quantity) {
      //   this.userId = userId;
@@ -50,12 +57,12 @@ public class Cart {
         this.quantity = quantity;
     }
 
-    public Cart(CartDto cartDto, Product product) {
-        this.productId = cartDto.getProductId();
-        this.quantity = cartDto.getQuantity();
-        this.product = product;
-        this.createdDate = new Date();
-    }
+//    public Cart(CartDto cartDto, Product product) {
+//        this.productId = cartDto.getProductId();
+//        this.quantity = cartDto.getQuantity();
+//        this.product = product;
+//        this.createdDate = new Date();
+//    }
 
     public Integer getId() {
         return id;
@@ -97,12 +104,12 @@ public class Cart {
         this.quantity = quantity;
     }
 
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = session.getId();
-    }
+//    public String getSessionId() {
+//        return sessionId;
+//    }
+//
+//    public void setSessionId(String sessionId) {
+//        this.sessionId = session.getId();
+//    }
 
 }

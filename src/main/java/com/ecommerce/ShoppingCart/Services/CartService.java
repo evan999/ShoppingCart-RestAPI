@@ -1,5 +1,6 @@
 package com.ecommerce.ShoppingCart.Services;
 
+import com.ecommerce.ShoppingCart.Dto.CartItemDto;
 import com.ecommerce.ShoppingCart.Exceptions.CartItemNotExistException;
 import com.ecommerce.ShoppingCart.Dto.AddToCartDto;
 import com.ecommerce.ShoppingCart.Dto.CartDto;
@@ -24,58 +25,56 @@ public class CartService {
         this.cartRepository = cartRepository;
     }
 
-    public void addToCart(AddToCartDto addToCartDto) {
-        Cart cart = getAddToCartFromDto(addToCartDto);
+
+    public void addToCart(AddToCartDto addToCartDto, Product product){
+        Cart cart = new Cart(product, addToCartDto.getQuantity());
         cartRepository.save(cart);
     }
 
 
-
-    private Cart getAddToCartFromDto(AddToCartDto addToCartDto) {
-        Cart cart = new Cart(addToCartDto);
-        return cart;
-    }
-
-    // Takes in param sessionId or session
-    public CartCost listCartItems(String sessionId) {
-//        Cart cart = Cache.get(session.getId(), cart.getClass());
-        //List<Cart> cartList = cartRepository.findAllByUserIdOrderByCreatedDateDesc(userId);
-        List<CartDto> cartItems = new ArrayList<>();
-//        for (Cart cart : cartList) {
-//            CartDto cartDto = getDtoFromCart(cart);
-//            cartItems.add(cartDto);
-//        }
-        double totalCost = 0;
-        for (CartDto cartDto : cartItems) {
-            totalCost += (cartDto.getProduct().getPrice()* cartDto.getQuantity());
+    public CartDto listCartItems() {
+        List<Cart> cartList = cartRepository.findAllByUserOrderByCreatedDateDesc(user);
+        List<CartItemDto> cartItems = new ArrayList<>();
+        for (Cart cart: cartList){
+            CartItemDto cartItemDto = getDtoFromCart(cart);
+            cartItems.add(cartItemDto);
         }
-        CartCost cartCost = new CartCost(cartItems, totalCost);
-        return cartCost;
-    }
-
-    public static CartDto getDtoFromCart(Cart cart) {
-        CartDto cartDto = new CartDto(cart);
+        double totalCost = 0;
+        for (CartItemDto cartItemDto : cartItems){
+            totalCost += (cartItemDto.getProduct().getPrice() * cartItemDto.getQuantity());
+        }
+        CartDto cartDto = new CartDto(cartItems,totalCost);
         return cartDto;
     }
 
-    public void updateCartItem(AddToCartDto cartDto, Product product) {
-        Cart cart = getAddToCartFromDto(cartDto);
+
+    public static CartItemDto getDtoFromCart(Cart cart) {
+        CartItemDto cartItemDto = new CartItemDto(cart);
+        return cartItemDto;
+    }
+
+
+    public void updateCartItem(AddToCartDto cartDto, Product product){
+        Cart cart = cartRepository.getOne(cartDto.getId());
         cart.setQuantity(cartDto.getQuantity());
-        // cart.setUserId(userId);
-        cart.setId(cartDto.getId());
-        cart.setProductId(product.getId());
         cart.setCreatedDate(new Date());
         cartRepository.save(cart);
     }
 
     public void deleteCartItem(int id) throws CartItemNotExistException {
-        if (!cartRepository.existsById(id)) {
+        if (!cartRepository.existsById(id))
             throw new CartItemNotExistException("Cart id is invalid : " + id);
-        }
         cartRepository.deleteById(id);
+
     }
 
-    public void deleteCartItems(int userId) {
+    public void deleteCartItems() {
         cartRepository.deleteAll();
     }
+
+
+//    public void deleteUserCartItems(User user) {
+//        cartRepository.deleteByUser(user);
+//    }
+
 }

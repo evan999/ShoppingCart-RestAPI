@@ -3,59 +3,32 @@ package com.ecommerce.ShoppingCart.Dto;
 import com.ecommerce.ShoppingCart.Models.Cart;
 import com.ecommerce.ShoppingCart.Models.Product;
 
+import java.util.List;
+
 public class CartDto {
-    private Integer id;
-//    private Integer userId;
-    private Integer quantity;
-    private Product product;
+    List<CartItemDto> cartItems;
+    private double totalCost;
 
-    public CartDto() {
+    public CartDto(List<CartItemDto> cartItemDtoList, double totalCost) {
+        this.cartItems = cartItemDtoList;
+        this.totalCost = totalCost;
     }
 
-    public CartDto(Cart cart) {
-        this.setId(cart.getId());
-        //this.setUserId(cart.getUserId());
-        this.setQuantity(cart.getQuantity());
-        this.setProduct(cart.getProduct());
+    public List<CartItemDto> getCartItems() {
+        return cartItems;
     }
 
-    @Override
-    public String toString() {
-        return "CartDto{" +
-                "id=" + id +
-                ", quantity=" + quantity +
-                ", productName=" + product.getName() +
-                '}';
+    public void setCartItems(List<CartItemDto> cartItemDtoList) {
+        this.cartItems = cartItemDtoList;
     }
 
-    public Integer getId() {
-        return id;
+    public double getTotalCost() {
+        return totalCost;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setTotalCost(int totalCost) {
+        this.totalCost = totalCost;
     }
 
-//    public Integer getUserId() {
-//        return userId;
-//    }
-//
-//    public void setUserId(Integer userId) {
-//        this.userId = userId;
-//    }
 
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
 }

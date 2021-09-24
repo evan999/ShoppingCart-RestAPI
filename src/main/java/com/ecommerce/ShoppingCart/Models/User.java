@@ -1,7 +1,5 @@
 package com.ecommerce.ShoppingCart.Models;
 
-import com.ecommerce.ShoppingCart.enums.Role;
-
 import java.util.List;
 
 public class User {
