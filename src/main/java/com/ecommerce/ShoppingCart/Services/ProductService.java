@@ -6,11 +6,13 @@ import com.ecommerce.ShoppingCart.Models.Category;
 import com.ecommerce.ShoppingCart.Models.Product;
 import com.ecommerce.ShoppingCart.Repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class ProductService {
     @Autowired
     private ProductRepository productRepository;

@@ -1,6 +1,7 @@
 package com.ecommerce.ShoppingCart.Models;
 
 import com.ecommerce.ShoppingCart.Dto.CartDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.boot.web.servlet.server.Session;
 
 import javax.persistence.*;
@@ -21,13 +22,16 @@ public class Cart {
     @Column(name = "created_date")
     private Date createdDate;
 
-//    private User user;
+    @JsonIgnore
+    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false, name = "user_id")
+    private User user;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "product_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Product product;
 
-    private String sessionId;
+//    private String sessionId;
 //    private Session session = new Session();
 
 
@@ -35,7 +39,8 @@ public class Cart {
     public Cart() {
     }
 
-    public Cart(Product product, int quantity){
+    public Cart(Product product, int quantity, User user){
+        this.user = user;
         this.product = product;
         this.quantity = quantity;
         this.createdDate = new Date();
@@ -50,19 +55,19 @@ public class Cart {
 //        this.quantity = quantity;
 //    }
 
-    public Cart(Integer productId, int quantity) {
-     //   this.userId = userId;
-        this.productId = productId;
-        this.createdDate = new Date();
-        this.quantity = quantity;
-    }
+//
 
 //    public Cart(CartDto cartDto, Product product) {
 //        this.productId = cartDto.getProductId();
 //        this.quantity = cartDto.getQuantity();
 //        this.product = product;
 //        this.createdDate = new Date();
-//    }
+//    }    public Cart(Integer productId, int quantity) {
+////     //   this.userId = userId;
+////        this.productId = productId;
+////        this.createdDate = new Date();
+////        this.quantity = quantity;
+////    }
 
     public Integer getId() {
         return id;
@@ -96,6 +101,14 @@ public class Cart {
         this.product = product;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public int getQuantity() {
         return quantity;
     }
@@ -109,7 +122,7 @@ public class Cart {
 //    }
 //
 //    public void setSessionId(String sessionId) {
-//        this.sessionId = session.getId();
+//        this.sessionId = sessionId;
 //    }
 
 }
